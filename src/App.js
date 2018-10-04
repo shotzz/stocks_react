@@ -67,7 +67,7 @@ class StocksApp extends Component {
     updateStockObj(stockData, stock) {
 
         let name = stockData[0],
-            price = stockData[1].toFixed(4),
+            price = parseFloat(stockData[1].toFixed(4)),
             maxPrice = stock.max || price,
             minPrice = stock.min || price,
             prevPrice = stock.price,
@@ -94,6 +94,8 @@ class StocksApp extends Component {
             if(time <= presentTime) {
                 displayTime = Math.abs(presentTime - time)/1000;
             }
+
+            displayTime = Math.round(displayTime)==0? "Jus Now" : Math.round(displayTime) + " secs ago";
 
             priceArray.push(price);
         }

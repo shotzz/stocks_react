@@ -120,11 +120,11 @@ body {
   font-weight: 600;
 }
 
-.row.priceFall .price {
+.row .priceFall {
   color: #ff0000;
 }
 
-.row.priceRise .price {
+.row .priceRise {
   color: #0abe51;
 }
 

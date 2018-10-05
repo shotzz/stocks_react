@@ -1,22 +1,35 @@
-import React, {Fragment} from 'react';
+import React from 'react';
+import { Sparklines, SparklinesLine, SparklinesReferenceLine } from 'react-sparklines';
 
 // Component list
 const StockList = (props) => {
     return (
         <div className="row">
             <div>{props.stock.name}</div>
-            <div>{props.stock.price}</div>
             {
                 props.stock.priceChange===2 ? (
-                    <div className="priceRise">{props.stock.displayTime}</div>
+                    <div className="priceRise price">{props.stock.price}</div>
                 ) : props.stock.priceChange===0 ? (
-                    <div className="priceFall">{props.stock.displayTime}</div>
+                    <div className="priceFall price">{props.stock.price}</div>
                 ) : (
-                    <div>Jus now</div>
+                    <div className="price">{props.stock.price}</div>
+                )
+            }
+            {
+                props.stock.displayTime!==0 ? (
+                    <div className="time">{props.stock.displayTime}</div>
+                ) : (
+                    <div className="time">Jus now</div>
                 )
             }
             <div>{props.stock.max}</div>
             <div>{props.stock.min}</div>
+            <div className="trend">
+                <Sparklines data={props.stock.priceArray}>
+                    <SparklinesLine />
+                    <SparklinesReferenceLine type="mean" />
+                </Sparklines>
+            </div>
         </div>
     );
 };

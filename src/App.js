@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import logo from './mnet.svg';
+import spinner from './spinner.gif'
 import './App.css';
 
 import StockList from './StockList';
@@ -95,7 +96,7 @@ class StocksApp extends Component {
                 displayTime = Math.abs(presentTime - time)/1000;
             }
 
-            displayTime = Math.round(displayTime)==0? "Jus Now" : Math.round(displayTime) + " secs ago";
+            displayTime = Math.round(displayTime)===0? "Jus Now" : Math.round(displayTime) + " secs ago";
 
             priceArray.push(price);
         }
@@ -128,20 +129,21 @@ class StocksApp extends Component {
                     <div id="info">Unable to fetch any more data.</div>
                     <div className="logo"><img src={logo} alt="" /></div>
                     {
-                        this.state.stocks? (
+                        Object.keys(this.state.stocks).length === 0 ? (
+                            <div className="loading">
+                                <img src={spinner} alt="Loading...." width="100"/>
+                            </div>
+                        ): (
                             <div id="results">
                                 <div className="row header">
                                     <div className="stockName">Ticker</div>
                                     <div className="price">Price</div>
-                                    <div id="header-time">Last Updated</div>
+                                    <div className="time">Last Updated</div>
                                     <div className="high">High</div>
                                     <div className="low">Low</div>
+                                    <div className="trend">Trends</div>
                                 </div>
                                 <div>{results}</div>
-                            </div>
-                        ): (
-                            <div className="loading">
-                                <img src="assets/spinner.gif" width="100"/>
                             </div>
                         )
                     }

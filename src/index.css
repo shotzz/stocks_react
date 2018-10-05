@@ -93,11 +93,8 @@ body {
   background: #ffffff;
   display: flex;
   flex-direction: row;
+  align-items: center;
   transition: background-color 1s linear;
-}
-
-.row:hover {
-  cursor: pointer;
 }
 
 .row:nth-child(even) {
@@ -168,7 +165,7 @@ body {
     text-overflow: ellipsis;
   }
 
-  div[id$="-time"] {
+  .time {
     display: none;
   }
 }

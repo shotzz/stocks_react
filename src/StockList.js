@@ -25,7 +25,7 @@ const StockList = (props) => {
             <div>{props.stock.max}</div>
             <div>{props.stock.min}</div>
             <div className="trend">
-                <Sparklines data={props.stock.priceArray}>
+                <Sparklines data={props.stock.priceArray} limit={40} width={100} height={25} >
                     <SparklinesLine />
                     <SparklinesReferenceLine type="mean" />
                 </Sparklines>

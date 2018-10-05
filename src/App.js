@@ -6,21 +6,24 @@ import './App.css';
 
 import StockList from './StockList';
 
-var webSocket = null,
+let webSocket = null,
     PRICE_RISE = 2,
     PRICE_SAME = 1,
     PRICE_FALL = 0,
+    SORT_FLAG = true,
     stockObj = {};
 
 class StocksApp extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            sorted: SORT_FLAG,
             stocks: {}
         };
         this.fetchStocks = this.fetchStocks.bind(this);
         this.renderStocks = this.renderStocks.bind(this);
         this.updateStockObj = this.updateStockObj.bind(this);
+        this.sortList = this.sortList.bind(this);
         this.init = this.init();
     }
 
@@ -101,6 +104,12 @@ class StocksApp extends Component {
             priceArray.push(price);
         }
 
+        this.state.sorted ? (
+            SORT_FLAG = true
+            ) : (
+                SORT_FLAG = false
+            );
+
         stockObj[name] = {
             name: name,
             price: price,
@@ -113,8 +122,32 @@ class StocksApp extends Component {
         };
 
         this.setState({
+            sorted: SORT_FLAG,
             stocks: stockObj
         });
+    }
+
+    sortList () {
+        const newList = stockObj;
+        const sortedList = {};
+
+         SORT_FLAG ?
+            (
+                Object.keys(newList).sort().forEach(function(key) {
+                    sortedList[key] = newList[key];
+                    SORT_FLAG = false;
+                })
+            ) : (
+                    Object.keys(newList).sort().reverse().forEach(function(key) {
+                        sortedList[key] = newList[key];
+                        SORT_FLAG = true;
+                })
+            )
+        this.setState({
+            sorted: SORT_FLAG,
+            stocks: sortedList
+        });
+
     }
 
     render() {
@@ -136,7 +169,7 @@ class StocksApp extends Component {
                         ): (
                             <div id="results">
                                 <div className="row header">
-                                    <div className="stockName">Ticker</div>
+                                    <div className="stockName" id="name" onClick={() => this.sortList("name")}>Ticker</div>
                                     <div className="price">Price</div>
                                     <div className="time">Last Updated</div>
                                     <div className="high">High</div>
